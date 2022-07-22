@@ -30,10 +30,10 @@ class returnstruct():
 @client.event
 async def on_ready():
     print("bot is running")
-    funca.start()
+    checkForChanges.start()
 
 @tasks.loop(minutes=5)
-async def funca():
+async def checkForChanges():
   sumString = ''
   for set in liveSets:
     if sumString == '':
