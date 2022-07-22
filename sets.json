@@ -1,13 +1,388 @@
 {
     "object": "list",
-    "total_cards": 16,
+    "total_cards": 19,
     "has_more": false,
     "data": [
+        {
+            "object": "card",
+            "id": "c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0",
+            "oracle_id": "138201c0-556d-4c76-b383-90fc9dad0fe0",
+            "multiverse_ids": [],
+            "name": "Jasmine Boreal of the Seven",
+            "lang": "en",
+            "released_at": "2022-09-09",
+            "uri": "https://api.scryfall.com/cards/c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0",
+            "scryfall_uri": "https://scryfall.com/card/dmc/33/jasmine-boreal-of-the-seven?utm_source=api",
+            "layout": "normal",
+            "highres_image": false,
+            "image_status": "lowres",
+            "image_uris": {
+                "small": "https://c1.scryfall.com/file/scryfall-cards/small/front/c/1/c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0.jpg?1658514240",
+                "normal": "https://c1.scryfall.com/file/scryfall-cards/normal/front/c/1/c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0.jpg?1658514240",
+                "large": "https://c1.scryfall.com/file/scryfall-cards/large/front/c/1/c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0.jpg?1658514240",
+                "png": "https://c1.scryfall.com/file/scryfall-cards/png/front/c/1/c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0.png?1658514240",
+                "art_crop": "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/c/1/c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0.jpg?1658514240",
+                "border_crop": "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/c/1/c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0.jpg?1658514240"
+            },
+            "mana_cost": "{1}{G}{W}",
+            "cmc": 3.0,
+            "type_line": "Legendary Creature — Human Druid",
+            "oracle_text": "{T}: Add {G}{W}. Spend this mana only to cast creature spells with no abilities.\nCreatures you control with no abilities can't be blocked by creatures with abilities.",
+            "power": "2",
+            "toughness": "4",
+            "colors": [
+                "G",
+                "W"
+            ],
+            "color_identity": [
+                "G",
+                "W"
+            ],
+            "keywords": [],
+            "produced_mana": [
+                "G",
+                "W"
+            ],
+            "legalities": {
+                "standard": "not_legal",
+                "future": "not_legal",
+                "historic": "not_legal",
+                "gladiator": "not_legal",
+                "pioneer": "not_legal",
+                "explorer": "not_legal",
+                "modern": "not_legal",
+                "legacy": "not_legal",
+                "pauper": "not_legal",
+                "vintage": "not_legal",
+                "penny": "not_legal",
+                "commander": "not_legal",
+                "brawl": "not_legal",
+                "historicbrawl": "not_legal",
+                "alchemy": "not_legal",
+                "paupercommander": "not_legal",
+                "duel": "not_legal",
+                "oldschool": "not_legal",
+                "premodern": "not_legal"
+            },
+            "games": [
+                "paper"
+            ],
+            "reserved": false,
+            "foil": true,
+            "nonfoil": true,
+            "finishes": [
+                "nonfoil",
+                "foil"
+            ],
+            "oversized": false,
+            "promo": false,
+            "reprint": false,
+            "variation": false,
+            "set_id": "78076b27-f888-4723-b27c-44074accd261",
+            "set": "dmc",
+            "set_name": "Dominaria United Commander",
+            "set_type": "commander",
+            "set_uri": "https://api.scryfall.com/sets/78076b27-f888-4723-b27c-44074accd261",
+            "set_search_uri": "https://api.scryfall.com/cards/search?order=set&q=e%3Admc&unique=prints",
+            "scryfall_set_uri": "https://scryfall.com/sets/dmc?utm_source=api",
+            "rulings_uri": "https://api.scryfall.com/cards/c1f5bcc4-3ec7-42ae-8e4b-80a9b9135ff0/rulings",
+            "prints_search_uri": "https://api.scryfall.com/cards/search?order=released&q=oracleid%3A138201c0-556d-4c76-b383-90fc9dad0fe0&unique=prints",
+            "collector_number": "33",
+            "digital": false,
+            "rarity": "uncommon",
+            "flavor_text": "\"I've had my adventures. All I wish now is to sit in peace and speak with the pines.\"",
+            "card_back_id": "0aeebaf5-8c7d-4636-9e82-8c27447861f7",
+            "artist": "Bastien L. Deharme",
+            "artist_ids": [
+                "798f63ec-41ad-474e-9708-df08193345c6"
+            ],
+            "illustration_id": "48ff4d58-8309-403b-a3b8-5a9883ea9b33",
+            "border_color": "black",
+            "frame": "2015",
+            "frame_effects": [
+                "legendary"
+            ],
+            "full_art": false,
+            "textless": false,
+            "booster": false,
+            "story_spotlight": false,
+            "preview": {
+                "source": "Wizards of the Coast",
+                "source_uri": "https://magic.wizards.com/en/articles/archive/card-image-gallery/dominaria-united-commander",
+                "previewed_at": "2022-07-21"
+            },
+            "prices": {
+                "usd": null,
+                "usd_foil": null,
+                "usd_etched": null,
+                "eur": null,
+                "eur_foil": null,
+                "tix": null
+            },
+            "related_uris": {
+                "tcgplayer_infinite_articles": "https://infinite.tcgplayer.com/search?contentMode=article&game=magic&partner=scryfall&q=Jasmine+Boreal+of+the+Seven&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
+                "tcgplayer_infinite_decks": "https://infinite.tcgplayer.com/search?contentMode=deck&game=magic&partner=scryfall&q=Jasmine+Boreal+of+the+Seven&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
+                "edhrec": "https://edhrec.com/route/?cc=Jasmine+Boreal+of+the+Seven"
+            },
+            "purchase_uris": {
+                "tcgplayer": "https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Jasmine+Boreal+of+the+Seven&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall&view=grid",
+                "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Jasmine+Boreal+of+the+Seven&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
+                "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Jasmine+Boreal+of+the+Seven&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
+            }
+        },
+        {
+            "object": "card",
+            "id": "91f65272-fee1-4076-b5b2-2e04001cf1ea",
+            "oracle_id": "a3b8690e-ac47-444f-924e-ab2a12a85431",
+            "multiverse_ids": [],
+            "name": "Ramirez DePietro, Pillager",
+            "lang": "en",
+            "released_at": "2022-09-09",
+            "uri": "https://api.scryfall.com/cards/91f65272-fee1-4076-b5b2-2e04001cf1ea",
+            "scryfall_uri": "https://scryfall.com/card/dmc/38/ramirez-depietro-pillager?utm_source=api",
+            "layout": "normal",
+            "highres_image": false,
+            "image_status": "lowres",
+            "image_uris": {
+                "small": "https://c1.scryfall.com/file/scryfall-cards/small/front/9/1/91f65272-fee1-4076-b5b2-2e04001cf1ea.jpg?1658429557",
+                "normal": "https://c1.scryfall.com/file/scryfall-cards/normal/front/9/1/91f65272-fee1-4076-b5b2-2e04001cf1ea.jpg?1658429557",
+                "large": "https://c1.scryfall.com/file/scryfall-cards/large/front/9/1/91f65272-fee1-4076-b5b2-2e04001cf1ea.jpg?1658429557",
+                "png": "https://c1.scryfall.com/file/scryfall-cards/png/front/9/1/91f65272-fee1-4076-b5b2-2e04001cf1ea.png?1658429557",
+                "art_crop": "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/9/1/91f65272-fee1-4076-b5b2-2e04001cf1ea.jpg?1658429557",
+                "border_crop": "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/9/1/91f65272-fee1-4076-b5b2-2e04001cf1ea.jpg?1658429557"
+            },
+            "mana_cost": "{2}{U}{B}",
+            "cmc": 4.0,
+            "type_line": "Legendary Creature — Human Pirate",
+            "oracle_text": "When Ramirez DePietro, Pillager enters the battlefield, you lose 2 life and create two Treasure tokens.\nWhenever one or more Pirates you control deal combat damage to a player, exile the top card of that player's library. You may cast that card for as long as it remains exiled.",
+            "power": "4",
+            "toughness": "3",
+            "colors": [
+                "B",
+                "U"
+            ],
+            "color_identity": [
+                "B",
+                "U"
+            ],
+            "keywords": [],
+            "legalities": {
+                "standard": "not_legal",
+                "future": "not_legal",
+                "historic": "not_legal",
+                "gladiator": "not_legal",
+                "pioneer": "not_legal",
+                "explorer": "not_legal",
+                "modern": "not_legal",
+                "legacy": "not_legal",
+                "pauper": "not_legal",
+                "vintage": "not_legal",
+                "penny": "not_legal",
+                "commander": "not_legal",
+                "brawl": "not_legal",
+                "historicbrawl": "not_legal",
+                "alchemy": "not_legal",
+                "paupercommander": "not_legal",
+                "duel": "not_legal",
+                "oldschool": "not_legal",
+                "premodern": "not_legal"
+            },
+            "games": [
+                "paper"
+            ],
+            "reserved": false,
+            "foil": true,
+            "nonfoil": true,
+            "finishes": [
+                "nonfoil",
+                "foil"
+            ],
+            "oversized": false,
+            "promo": false,
+            "reprint": false,
+            "variation": false,
+            "set_id": "78076b27-f888-4723-b27c-44074accd261",
+            "set": "dmc",
+            "set_name": "Dominaria United Commander",
+            "set_type": "commander",
+            "set_uri": "https://api.scryfall.com/sets/78076b27-f888-4723-b27c-44074accd261",
+            "set_search_uri": "https://api.scryfall.com/cards/search?order=set&q=e%3Admc&unique=prints",
+            "scryfall_set_uri": "https://scryfall.com/sets/dmc?utm_source=api",
+            "rulings_uri": "https://api.scryfall.com/cards/91f65272-fee1-4076-b5b2-2e04001cf1ea/rulings",
+            "prints_search_uri": "https://api.scryfall.com/cards/search?order=released&q=oracleid%3Aa3b8690e-ac47-444f-924e-ab2a12a85431&unique=prints",
+            "collector_number": "38",
+            "digital": false,
+            "rarity": "uncommon",
+            "card_back_id": "0aeebaf5-8c7d-4636-9e82-8c27447861f7",
+            "artist": "Anna Steinbauer",
+            "artist_ids": [
+                "3516496c-c279-4b56-8239-720683d03ae0"
+            ],
+            "illustration_id": "f5b702b1-85d4-4554-8478-1c6734f405b5",
+            "border_color": "black",
+            "frame": "2015",
+            "frame_effects": [
+                "legendary"
+            ],
+            "full_art": false,
+            "textless": false,
+            "booster": false,
+            "story_spotlight": false,
+            "preview": {
+                "source": "Wizards of the Coast",
+                "source_uri": "https://magic.wizards.com/en/articles/archive/card-image-gallery/dominaria-united-commander",
+                "previewed_at": "2022-07-21"
+            },
+            "prices": {
+                "usd": null,
+                "usd_foil": null,
+                "usd_etched": null,
+                "eur": null,
+                "eur_foil": null,
+                "tix": null
+            },
+            "related_uris": {
+                "tcgplayer_infinite_articles": "https://infinite.tcgplayer.com/search?contentMode=article&game=magic&partner=scryfall&q=Ramirez+DePietro%2C+Pillager&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
+                "tcgplayer_infinite_decks": "https://infinite.tcgplayer.com/search?contentMode=deck&game=magic&partner=scryfall&q=Ramirez+DePietro%2C+Pillager&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
+                "edhrec": "https://edhrec.com/route/?cc=Ramirez+DePietro%2C+Pillager"
+            },
+            "purchase_uris": {
+                "tcgplayer": "https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Ramirez+DePietro%2C+Pillager&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall&view=grid",
+                "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Ramirez+DePietro%2C+Pillager&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
+                "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Ramirez+DePietro%2C+Pillager&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
+            }
+        },
+        {
+            "object": "card",
+            "id": "adea296b-b320-4588-9d6e-cbb5db7c39e3",
+            "oracle_id": "b44d5457-b4d6-4521-a25a-8ef96adba461",
+            "multiverse_ids": [],
+            "name": "Tor Wauki the Younger",
+            "lang": "en",
+            "released_at": "2022-09-09",
+            "uri": "https://api.scryfall.com/cards/adea296b-b320-4588-9d6e-cbb5db7c39e3",
+            "scryfall_uri": "https://scryfall.com/card/dmc/46/tor-wauki-the-younger?utm_source=api",
+            "layout": "normal",
+            "highres_image": false,
+            "image_status": "lowres",
+            "image_uris": {
+                "small": "https://c1.scryfall.com/file/scryfall-cards/small/front/a/d/adea296b-b320-4588-9d6e-cbb5db7c39e3.jpg?1658429631",
+                "normal": "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/d/adea296b-b320-4588-9d6e-cbb5db7c39e3.jpg?1658429631",
+                "large": "https://c1.scryfall.com/file/scryfall-cards/large/front/a/d/adea296b-b320-4588-9d6e-cbb5db7c39e3.jpg?1658429631",
+                "png": "https://c1.scryfall.com/file/scryfall-cards/png/front/a/d/adea296b-b320-4588-9d6e-cbb5db7c39e3.png?1658429631",
+                "art_crop": "https://c1.scryfall.com/file/scryfall-cards/art_crop/front/a/d/adea296b-b320-4588-9d6e-cbb5db7c39e3.jpg?1658429631",
+                "border_crop": "https://c1.scryfall.com/file/scryfall-cards/border_crop/front/a/d/adea296b-b320-4588-9d6e-cbb5db7c39e3.jpg?1658429631"
+            },
+            "mana_cost": "{3}{B}{R}",
+            "cmc": 5.0,
+            "type_line": "Legendary Creature — Human Archer",
+            "oracle_text": "Reach, lifelink\nIf another source you control would deal noncombat damage to a permanent or player, it deals that much damage plus 1 to that permanent or player instead.\nWhenever you cast an instant or sorcery spell, Tor Wauki the Younger deals 2 damage to any target.",
+            "power": "3",
+            "toughness": "3",
+            "colors": [
+                "B",
+                "R"
+            ],
+            "color_identity": [
+                "B",
+                "R"
+            ],
+            "keywords": [
+                "Lifelink",
+                "Reach"
+            ],
+            "legalities": {
+                "standard": "not_legal",
+                "future": "not_legal",
+                "historic": "not_legal",
+                "gladiator": "not_legal",
+                "pioneer": "not_legal",
+                "explorer": "not_legal",
+                "modern": "not_legal",
+                "legacy": "not_legal",
+                "pauper": "not_legal",
+                "vintage": "not_legal",
+                "penny": "not_legal",
+                "commander": "not_legal",
+                "brawl": "not_legal",
+                "historicbrawl": "not_legal",
+                "alchemy": "not_legal",
+                "paupercommander": "not_legal",
+                "duel": "not_legal",
+                "oldschool": "not_legal",
+                "premodern": "not_legal"
+            },
+            "games": [
+                "paper"
+            ],
+            "reserved": false,
+            "foil": true,
+            "nonfoil": true,
+            "finishes": [
+                "nonfoil",
+                "foil"
+            ],
+            "oversized": false,
+            "promo": false,
+            "reprint": false,
+            "variation": false,
+            "set_id": "78076b27-f888-4723-b27c-44074accd261",
+            "set": "dmc",
+            "set_name": "Dominaria United Commander",
+            "set_type": "commander",
+            "set_uri": "https://api.scryfall.com/sets/78076b27-f888-4723-b27c-44074accd261",
+            "set_search_uri": "https://api.scryfall.com/cards/search?order=set&q=e%3Admc&unique=prints",
+            "scryfall_set_uri": "https://scryfall.com/sets/dmc?utm_source=api",
+            "rulings_uri": "https://api.scryfall.com/cards/adea296b-b320-4588-9d6e-cbb5db7c39e3/rulings",
+            "prints_search_uri": "https://api.scryfall.com/cards/search?order=released&q=oracleid%3Ab44d5457-b4d6-4521-a25a-8ef96adba461&unique=prints",
+            "collector_number": "46",
+            "digital": false,
+            "rarity": "uncommon",
+            "card_back_id": "0aeebaf5-8c7d-4636-9e82-8c27447861f7",
+            "artist": "Karl Kopinski",
+            "artist_ids": [
+                "0fad2c48-a56e-4a0b-b512-224f6f238f20"
+            ],
+            "illustration_id": "a8b5b6b1-0182-4743-946e-136aaf3dcdb0",
+            "border_color": "black",
+            "frame": "2015",
+            "frame_effects": [
+                "legendary"
+            ],
+            "full_art": false,
+            "textless": false,
+            "booster": false,
+            "story_spotlight": false,
+            "preview": {
+                "source": "Wizards of the Coast",
+                "source_uri": "https://magic.wizards.com/en/articles/archive/card-image-gallery/dominaria-united-commander",
+                "previewed_at": "2022-07-21"
+            },
+            "prices": {
+                "usd": null,
+                "usd_foil": null,
+                "usd_etched": null,
+                "eur": null,
+                "eur_foil": null,
+                "tix": null
+            },
+            "related_uris": {
+                "tcgplayer_infinite_articles": "https://infinite.tcgplayer.com/search?contentMode=article&game=magic&partner=scryfall&q=Tor+Wauki+the+Younger&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
+                "tcgplayer_infinite_decks": "https://infinite.tcgplayer.com/search?contentMode=deck&game=magic&partner=scryfall&q=Tor+Wauki+the+Younger&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
+                "edhrec": "https://edhrec.com/route/?cc=Tor+Wauki+the+Younger"
+            },
+            "purchase_uris": {
+                "tcgplayer": "https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Tor+Wauki+the+Younger&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall&view=grid",
+                "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Tor+Wauki+the+Younger&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
+                "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Tor+Wauki+the+Younger&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
+            }
+        },
         {
             "object": "card",
             "id": "ebeafbc2-0399-4335-8f63-76a3e085e8c6",
             "oracle_id": "12367806-5924-485c-814a-5b67dd79235e",
             "multiverse_ids": [],
+            "tcgplayer_id": 279823,
             "name": "Evolved Sleeper",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -58,7 +433,11 @@
                 "oldschool": "not_legal",
                 "premodern": "not_legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -92,7 +471,7 @@
             "frame": "2015",
             "full_art": false,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": false,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -113,7 +492,7 @@
                 "edhrec": "https://edhrec.com/route/?cc=Evolved+Sleeper"
             },
             "purchase_uris": {
-                "tcgplayer": "https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Evolved+Sleeper&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall&view=grid",
+                "tcgplayer": "https://www.tcgplayer.com/product/279823?page=1&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
                 "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Evolved+Sleeper&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
                 "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Evolved+Sleeper&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
             }
@@ -123,6 +502,8 @@
             "id": "3b9f54f0-4368-4d28-aa21-3f1e7be1b23a",
             "oracle_id": "2458aa66-5b20-4811-a4a4-8375ad0a6498",
             "multiverse_ids": [],
+            "tcgplayer_id": 279827,
+            "cardmarket_id": 669130,
             "name": "Jaya, Fiery Negotiator",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -151,6 +532,24 @@
                 "R"
             ],
             "keywords": [],
+            "all_parts": [
+                {
+                    "object": "related_card",
+                    "id": "3b9f54f0-4368-4d28-aa21-3f1e7be1b23a",
+                    "component": "combo_piece",
+                    "name": "Jaya, Fiery Negotiator",
+                    "type_line": "Legendary Planeswalker — Jaya",
+                    "uri": "https://api.scryfall.com/cards/3b9f54f0-4368-4d28-aa21-3f1e7be1b23a"
+                },
+                {
+                    "object": "related_card",
+                    "id": "243a5830-d7a0-46c9-98c0-4d1dfc3ebc8c",
+                    "component": "combo_piece",
+                    "name": "Jaya, Fiery Negotiator Emblem",
+                    "type_line": "Emblem",
+                    "uri": "https://api.scryfall.com/cards/243a5830-d7a0-46c9-98c0-4d1dfc3ebc8c"
+                }
+            ],
             "legalities": {
                 "standard": "not_legal",
                 "future": "not_legal",
@@ -232,7 +631,7 @@
                 "edhrec": "https://edhrec.com/route/?cc=Jaya%2C+Fiery+Negotiator"
             },
             "purchase_uris": {
-                "tcgplayer": "https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Jaya%2C+Fiery+Negotiator&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall&view=grid",
+                "tcgplayer": "https://www.tcgplayer.com/product/279827?page=1&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
                 "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Jaya%2C+Fiery+Negotiator&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
                 "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Jaya%2C+Fiery+Negotiator&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
             }
@@ -242,6 +641,8 @@
             "id": "1f5d274c-3a03-4f0d-97e8-7eef6508105d",
             "oracle_id": "b7daa74c-6142-4107-9355-be98af6ccf13",
             "multiverse_ids": [],
+            "tcgplayer_id": 279826,
+            "cardmarket_id": 669129,
             "name": "Shivan Devastator",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -295,7 +696,11 @@
                 "oldschool": "not_legal",
                 "premodern": "not_legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -331,7 +736,7 @@
             "security_stamp": "oval",
             "full_art": false,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": false,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -352,7 +757,7 @@
                 "edhrec": "https://edhrec.com/route/?cc=Shivan+Devastator"
             },
             "purchase_uris": {
-                "tcgplayer": "https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Shivan+Devastator&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall&view=grid",
+                "tcgplayer": "https://www.tcgplayer.com/product/279826?page=1&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
                 "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Shivan+Devastator&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
                 "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Shivan+Devastator&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
             }
@@ -362,6 +767,8 @@
             "id": "9d690340-75f1-4733-bde5-2d60fd02f060",
             "oracle_id": "a0f25ffa-0e53-4e38-8001-d595fd2c2045",
             "multiverse_ids": [],
+            "tcgplayer_id": 279818,
+            "cardmarket_id": 669128,
             "name": "Temporal Firestorm",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -412,7 +819,11 @@
                 "oldschool": "not_legal",
                 "premodern": "not_legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -447,7 +858,7 @@
             "security_stamp": "oval",
             "full_art": false,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": true,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -468,7 +879,7 @@
                 "edhrec": "https://edhrec.com/route/?cc=Temporal+Firestorm"
             },
             "purchase_uris": {
-                "tcgplayer": "https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Temporal+Firestorm&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall&view=grid",
+                "tcgplayer": "https://www.tcgplayer.com/product/279818?page=1&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
                 "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Temporal+Firestorm&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
                 "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Temporal+Firestorm&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
             }
@@ -478,6 +889,8 @@
             "id": "bd5611db-82dd-464d-8b03-70d7619dcefe",
             "oracle_id": "08377424-619e-48ae-bc3c-fb199cd77cf9",
             "multiverse_ids": [],
+            "tcgplayer_id": 279821,
+            "cardmarket_id": 669127,
             "name": "Llanowar Loamspeaker",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -535,7 +948,11 @@
                 "oldschool": "not_legal",
                 "premodern": "not_legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -571,7 +988,7 @@
             "security_stamp": "oval",
             "full_art": false,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": false,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -592,7 +1009,7 @@
                 "edhrec": "https://edhrec.com/route/?cc=Llanowar+Loamspeaker"
             },
             "purchase_uris": {
-                "tcgplayer": "https://www.tcgplayer.com/search/magic/product?productLineName=magic&q=Llanowar+Loamspeaker&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall&view=grid",
+                "tcgplayer": "https://www.tcgplayer.com/product/279821?page=1&utm_campaign=affiliate&utm_medium=api&utm_source=scryfall",
                 "cardmarket": "https://www.cardmarket.com/en/Magic/Products/Search?referrer=scryfall&searchString=Llanowar+Loamspeaker&utm_campaign=card_prices&utm_medium=text&utm_source=scryfall",
                 "cardhoarder": "https://www.cardhoarder.com/cards?affiliate_id=scryfall&data%5Bsearch%5D=Llanowar+Loamspeaker&ref=card-profile&utm_campaign=affiliate&utm_medium=card&utm_source=scryfall"
             }
@@ -602,6 +1019,7 @@
             "id": "572eab93-7b1d-434b-ba92-844248e472d0",
             "oracle_id": "bc71ebf6-2056-41f7-be35-b2e5c34afa99",
             "multiverse_ids": [],
+            "cardmarket_id": 669122,
             "name": "Plains",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -651,7 +1069,11 @@
                 "oldschool": "not_legal",
                 "premodern": "legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -661,7 +1083,7 @@
             ],
             "oversized": false,
             "promo": false,
-            "reprint": false,
+            "reprint": true,
             "variation": false,
             "set_id": "4e47a6cd-cdeb-4b0f-8f24-cfe1a0127cb3",
             "set": "dmu",
@@ -683,9 +1105,9 @@
             "illustration_id": "2e53fbdb-0331-48f0-8082-2e762d78a8fe",
             "border_color": "black",
             "frame": "2015",
-            "full_art": false,
+            "full_art": true,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": false,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -716,6 +1138,7 @@
             "id": "e67477a4-6878-4356-8037-807f41590ad1",
             "oracle_id": "b2c6aa39-2d2a-459c-a555-fb48ba993373",
             "multiverse_ids": [],
+            "cardmarket_id": 669123,
             "name": "Island",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -765,7 +1188,11 @@
                 "oldschool": "not_legal",
                 "premodern": "legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -775,7 +1202,7 @@
             ],
             "oversized": false,
             "promo": false,
-            "reprint": false,
+            "reprint": true,
             "variation": false,
             "set_id": "4e47a6cd-cdeb-4b0f-8f24-cfe1a0127cb3",
             "set": "dmu",
@@ -797,9 +1224,9 @@
             "illustration_id": "f64510a9-d282-4e40-b3cd-8eb5bafe42ef",
             "border_color": "black",
             "frame": "2015",
-            "full_art": false,
+            "full_art": true,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": false,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -830,6 +1257,7 @@
             "id": "f1b8c9a6-62eb-436e-9277-e2b8075d482d",
             "oracle_id": "56719f6a-1a6c-4c0a-8d21-18f7d7350b68",
             "multiverse_ids": [],
+            "cardmarket_id": 669124,
             "name": "Swamp",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -879,7 +1307,11 @@
                 "oldschool": "not_legal",
                 "premodern": "legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -889,7 +1321,7 @@
             ],
             "oversized": false,
             "promo": false,
-            "reprint": false,
+            "reprint": true,
             "variation": false,
             "set_id": "4e47a6cd-cdeb-4b0f-8f24-cfe1a0127cb3",
             "set": "dmu",
@@ -911,9 +1343,9 @@
             "illustration_id": "6186512c-471d-4222-826d-4f39c45b48f7",
             "border_color": "black",
             "frame": "2015",
-            "full_art": false,
+            "full_art": true,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": false,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -944,6 +1376,7 @@
             "id": "0aaf15b9-1bf5-424a-a994-67beaae29d36",
             "oracle_id": "a3fb7228-e76b-4e96-a40e-20b5fed75685",
             "multiverse_ids": [],
+            "cardmarket_id": 669125,
             "name": "Mountain",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -993,7 +1426,11 @@
                 "oldschool": "not_legal",
                 "premodern": "legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -1003,7 +1440,7 @@
             ],
             "oversized": false,
             "promo": false,
-            "reprint": false,
+            "reprint": true,
             "variation": false,
             "set_id": "4e47a6cd-cdeb-4b0f-8f24-cfe1a0127cb3",
             "set": "dmu",
@@ -1025,9 +1462,9 @@
             "illustration_id": "1bf273f7-1d7d-4fc5-bc54-7fe45801d999",
             "border_color": "black",
             "frame": "2015",
-            "full_art": false,
+            "full_art": true,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": false,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -1058,6 +1495,7 @@
             "id": "e8e9959a-b422-4906-8d35-8b05c5dd6de1",
             "oracle_id": "b34bb2dc-c1af-4d77-b0b3-a0fb342a5fc6",
             "multiverse_ids": [],
+            "cardmarket_id": 669126,
             "name": "Forest",
             "lang": "en",
             "released_at": "2022-09-09",
@@ -1107,7 +1545,11 @@
                 "oldschool": "not_legal",
                 "premodern": "legal"
             },
-            "games": [],
+            "games": [
+                "paper",
+                "mtgo",
+                "arena"
+            ],
             "reserved": false,
             "foil": true,
             "nonfoil": true,
@@ -1117,7 +1559,7 @@
             ],
             "oversized": false,
             "promo": false,
-            "reprint": false,
+            "reprint": true,
             "variation": false,
             "set_id": "4e47a6cd-cdeb-4b0f-8f24-cfe1a0127cb3",
             "set": "dmu",
@@ -1139,9 +1581,9 @@
             "illustration_id": "192c1b5a-5fff-4c38-8cd1-e085dca31823",
             "border_color": "black",
             "frame": "2015",
-            "full_art": false,
+            "full_art": true,
             "textless": false,
-            "booster": false,
+            "booster": true,
             "story_spotlight": false,
             "preview": {
                 "source": "Wizards of the Coast",
@@ -1280,7 +1722,7 @@
             "textless": false,
             "booster": true,
             "story_spotlight": false,
-            "edhrec_rank": 3147,
+            "edhrec_rank": 3150,
             "prices": {
                 "usd": null,
                 "usd_foil": null,
@@ -1389,7 +1831,7 @@
             "textless": false,
             "booster": true,
             "story_spotlight": false,
-            "edhrec_rank": 11733,
+            "edhrec_rank": 11739,
             "penny_rank": 511,
             "prices": {
                 "usd": null,
@@ -1741,7 +2183,7 @@
             "textless": false,
             "booster": true,
             "story_spotlight": false,
-            "edhrec_rank": 3560,
+            "edhrec_rank": 3546,
             "prices": {
                 "usd": null,
                 "usd_foil": null,
@@ -1849,7 +2291,7 @@
             "textless": false,
             "booster": true,
             "story_spotlight": false,
-            "edhrec_rank": 10996,
+            "edhrec_rank": 11011,
             "prices": {
                 "usd": null,
                 "usd_foil": null,

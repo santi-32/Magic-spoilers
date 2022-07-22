@@ -5,13 +5,13 @@ import requests
 import json
 import time
 import asyncio
-from discord.ext import tasks, commands
+from discord.ext import tasks
 import logging, traceback
 from decouple import config
 
 token = config('TOKEN')
 client = discord.Client()
-liveSets = ['ea1', 'ha6', 'dmu']
+liveSets = ['ea1', 'ha6', 'dmu', 'dmc']
 
 class returnstruct():
     def __init__(self, Name, Mana_cost, Types, Text, Power, Toughness, Image, Modal, SecondFace, Set):
