@@ -1,3 +1,4 @@
+from ctypes import sizeof
 import os
 import sys
 import discord
@@ -57,7 +58,7 @@ async def checkForChanges():
     dataSize = collection.count_documents({})
     newCards = await compareCards(request, data, dataSize)
     dicted_arr = []
-    if newCards.count() > 0:
+    if len(newCards) > 0:
       for i in newCards:
         if i.Modal:
           i.SecondFace = i.SecondFace.__dict__
