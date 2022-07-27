@@ -7,15 +7,22 @@ import time
 import asyncio
 from discord.ext import tasks
 import logging, traceback
+import pymongo
 from decouple import config
+from pymongo import MongoClient
+
+cluster = MongoClient("mongodb+srv://santi_32:santi_32@ms.gy385.mongodb.net/?retryWrites=true&w=majority")
+db = cluster["MS"]
+collection = db["Cards"]
 
 token = config('TOKEN')
-client = discord.Client()
+discordClient = discord.Client()
 liveSets = ['ea1', 'ha6', 'dmu', 'dmc']
 
 class returnstruct():
-    def __init__(self, Name, Mana_cost, Types, Text, Power, Toughness, Image, Modal, SecondFace, Set):
+    def __init__(self, Name, _id, Mana_cost, Types, Text, Power, Toughness, Image, Modal, SecondFace, Set, Set_name, Collector_number):
         self.Name = Name
+        self._id = _id
         self.Mana_cost = Mana_cost
         self.Types = Types
         self.Text = Text
@@ -25,9 +32,11 @@ class returnstruct():
         self.Modal = Modal
         self.SecondFace = SecondFace
         self.Set = Set
+        self.Set_name = Set_name
+        self.Collector_number = Collector_number
 
 
-@client.event
+@discordClient.event
 async def on_ready():
     print("bot is running")
     checkForChanges.start()
@@ -44,32 +53,32 @@ async def checkForChanges():
   print(unparsed)
   request = unparsed.json()
   if request['object'] == "list":
-    if (os.path.exists('sets' + '.json')):
-      with open('sets' + '.json', 'r', encoding='utf-8') as lastFetch:
-        data = json.load(lastFetch)
-        await compareCards(lastFetch, request, data)
-    else:
-      tempJson = '{ "data":[]}'
-      data = json.loads(tempJson)
-      await compareCards(tempJson, request, data)
-    if (len(data['data']) <= len(request['data'])):
-      with open('sets' + '.json', 'w', encoding='utf-8') as lastFetch:
-        json.dump(request, lastFetch, ensure_ascii=False, indent=4)
+    data = collection.find().sort([("Set", 1), ("Collector_Number", 1)])
+    dataSize = collection.count_documents({})
+    newCards = await compareCards(request, data, dataSize)
+    dicted_arr = []
+    for i in newCards:
+      if i.Modal:
+        i.SecondFace = i.SecondFace.__dict__
+      dicted_arr.append(i.__dict__)
+    collection.insert_many(dicted_arr)
+  else:
+    print("something went wrong")
 
 async def on_error(event, *args, **kwargs):
   logging.warning(traceback.format_exc())
 
-async def compareCards(lastFetch, request, data):
-  e = compareJson(data, request)
-  if (len(e) > 0):
-    for g in client.guilds:
-      if g.name == 'Toronja Chan':
-        canal = discord.utils.get(g.channels, name="new-set-previews")
-        for i in e:
-          await send_card(i, canal)
+async def compareCards(request, data, dataSize):
+  newCards = getNewCards(data, request, dataSize)
+  if (len(newCards) > 0):
+    for g in discordClient.guilds:
+      canal = discord.utils.get(g.channels, name="new-set-previews")
+      for i in newCards:
+        await send_card(i, canal)
+  return newCards
 
-def parseCard(b, b_pos):
-    carta = b['data'][b_pos]
+def parseCard(newFetch, b_pos):
+    carta = newFetch['data'][b_pos]
     name = ''
     types = ''
     power = '0'
@@ -79,9 +88,12 @@ def parseCard(b, b_pos):
     image = 'No Image available'
     modal = False
     secondface = None
-    Set = b['data'][b_pos]['set_name']
+    _id = carta['id']
+    set = carta['set']
+    set_name = carta['set_name']
+    collector_number = carta['collector_number']
     if 'card_faces' in carta:
-        secondface = returnstruct(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        secondface = returnstruct(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         modal = True
         carta = carta['card_faces']
         name = carta[0]['name']
@@ -118,22 +130,22 @@ def parseCard(b, b_pos):
             oracle_text = carta['oracle_text']
         if 'image_uris' in carta:
             image = carta['image_uris']['png']
-    return (returnstruct(name, mana_cost, types, oracle_text, power, toughness, image, modal, secondface, Set))
+    return (returnstruct(name, _id, mana_cost, types, oracle_text, power, toughness, image, modal, secondface, set, set_name, collector_number))
 
 
-def compareJson(a, b):
+def getNewCards(database, newFetch, dataSize):
   b_pos = 0
   arr = []
-  if (len(a['data']) <= len(b['data'])):
-    for i in range(0, len(a['data'])):
-      if b_pos < len(b['data']):
-        while ((b_pos < len(b['data']) and (a['data'][i]["collector_number"]) != b['data'][b_pos]["collector_number"])):
-          new_card = parseCard(b, b_pos)
+  if (dataSize) <= len(newFetch['data']):
+    for i in database:
+      if b_pos < len(newFetch['data']):
+        while ((b_pos < len(newFetch['data'])) and (i["Collector_number"] != newFetch['data'][b_pos]["collector_number"])):
+          new_card = parseCard(newFetch, b_pos)
           arr.append(new_card)
           b_pos += 1
         b_pos += 1
-    while (b_pos < len(b['data'])):
-      new_card = parseCard(b, b_pos)
+    while (b_pos < len(newFetch['data'])):
+      new_card = parseCard(newFetch, b_pos)
       arr.append(new_card)
       b_pos += 1
   return arr
@@ -150,4 +162,4 @@ async def send_card(i, canal):
 		i.Modal = False
 		send_card(i.secondface)
 
-client.run(token)
+discordClient.run(token)
