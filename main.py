@@ -57,11 +57,12 @@ async def checkForChanges():
     dataSize = collection.count_documents({})
     newCards = await compareCards(request, data, dataSize)
     dicted_arr = []
-    for i in newCards:
-      if i.Modal:
-        i.SecondFace = i.SecondFace.__dict__
-      dicted_arr.append(i.__dict__)
-    collection.insert_many(dicted_arr)
+    if newCards.count() > 0:
+      for i in newCards:
+        if i.Modal:
+          i.SecondFace = i.SecondFace.__dict__
+        dicted_arr.append(i.__dict__)
+      collection.insert_many(dicted_arr)
   else:
     print("something went wrong")
 
