@@ -54,9 +54,7 @@ async def checkForChanges():
   print(unparsed)
   request = unparsed.json()
   if request['object'] == "list":
-    data = collection.find().sort([("Set", 1), ("Collector_Number", 1)])
-    dataSize = collection.count_documents({})
-    newCards = await compareCards(request, data, dataSize)
+    newCards = await compareCards(request, collection)
     dicted_arr = []
     if len(newCards) > 0:
       for i in newCards:
@@ -70,8 +68,8 @@ async def checkForChanges():
 async def on_error(event, *args, **kwargs):
   logging.warning(traceback.format_exc())
 
-async def compareCards(request, data, dataSize):
-  newCards = getNewCards(data, request, dataSize)
+async def compareCards(request, collection):
+  newCards = getNewCards(collection, request)
   if (len(newCards) > 0):
     for g in discordClient.guilds:
       canal = discord.utils.get(g.channels, name="new-set-previews")
@@ -79,8 +77,7 @@ async def compareCards(request, data, dataSize):
         await send_card(i, canal)
   return newCards
 
-def parseCard(newFetch, b_pos):
-    carta = newFetch['data'][b_pos]
+def parseCard(card):
     name = ''
     types = ''
     power = '0'
@@ -90,67 +87,61 @@ def parseCard(newFetch, b_pos):
     image = 'No Image available'
     modal = False
     secondface = None
-    _id = carta['id']
-    set = carta['set']
-    set_name = carta['set_name']
-    collector_number = carta['collector_number']
-    if 'card_faces' in carta:
+    _id = card['id']
+    set = card['set']
+    set_name = card['set_name']
+    collector_number = card['collector_number']
+    if 'card_faces' in card:
         secondface = returnstruct(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         modal = True
-        carta = carta['card_faces']
-        name = carta[0]['name']
-        types = carta[0]['type_line']
-        if 'power' in carta[0]:
-            power = carta[0]['power']
-            toughness = carta[0]['toughness']
-        if 'mana_cost' in carta[0]:
-            mana_cost = carta[0]['mana_cost']
-        if "oracle_text" in carta[0]:
-            oracle_text = carta[0]['oracle_text']
-        if 'image_uris' in carta[0]:
-            image = carta[0]['image_uris']['png']
-        secondface.Name = carta[1]['name']
-        secondface.Types = carta[1]['type_line']
-        if 'power' in carta[1]:
-            secondface.Power = carta[1]['power']
-            secondface.Toughness = carta[1]['toughness']
-        if 'mana_cost' in carta[1]:
-            secondface.Mana_cost = carta[1]['mana_cost']
-        if "oracle_text" in carta[1]:
-            secondface.Text = carta[1]['oracle_text']
-        if 'image_uris' in carta[1]:
-            secondface.Image = carta[1]['image_uris']['png']
+        card = card['card_faces']
+        name = card[0]['name']
+        types = card[0]['type_line']
+        if 'power' in card[0]:
+            power = card[0]['power']
+            toughness = card[0]['toughness']
+        if 'mana_cost' in card[0]:
+            mana_cost = card[0]['mana_cost']
+        if "oracle_text" in card[0]:
+            oracle_text = card[0]['oracle_text']
+        if 'image_uris' in card[0]:
+            image = card[0]['image_uris']['png']
+        secondface.Name = card[1]['name']
+        secondface.Types = card[1]['type_line']
+        if 'power' in card[1]:
+            secondface.Power = card[1]['power']
+            secondface.Toughness = card[1]['toughness']
+        if 'mana_cost' in card[1]:
+            secondface.Mana_cost = card[1]['mana_cost']
+        if "oracle_text" in card[1]:
+            secondface.Text = card[1]['oracle_text']
+        if 'image_uris' in card[1]:
+            secondface.Image = card[1]['image_uris']['png']
     else:
-        name = carta['name']
-        types = carta['type_line']
-        if 'power' in carta:
-            power = carta['power']
-            toughness = carta['toughness']
-        if 'mana_cost' in carta:
-            mana_cost = carta['mana_cost']
-        if "oracle_text" in carta:
-            oracle_text = carta['oracle_text']
-        if 'image_uris' in carta:
-            image = carta['image_uris']['png']
+        name = card['name']
+        types = card['type_line']
+        if 'power' in card:
+            power = card['power']
+            toughness = card['toughness']
+        if 'mana_cost' in card:
+            mana_cost = card['mana_cost']
+        if "oracle_text" in card:
+            oracle_text = card['oracle_text']
+        if 'image_uris' in card:
+            image = card['image_uris']['png']
     return (returnstruct(name, _id, mana_cost, types, oracle_text, power, toughness, image, modal, secondface, set, set_name, collector_number))
 
 
-def getNewCards(database, newFetch, dataSize):
-  b_pos = 0
+def getNewCards(collection, newFetch):
   arr = []
-  if (dataSize) <= len(newFetch['data']):
-    for i in database:
-      if b_pos < len(newFetch['data']):
-        while ((b_pos < len(newFetch['data'])) and (i["Collector_number"] != newFetch['data'][b_pos]["collector_number"])):
-          new_card = parseCard(newFetch, b_pos)
-          arr.append(new_card)
-          b_pos += 1
-        b_pos += 1
-    while (b_pos < len(newFetch['data'])):
-      new_card = parseCard(newFetch, b_pos)
+  for card in newFetch['data']:
+    isInDatabase = collection.find_one({"_id": card['id']}) 
+    if isInDatabase == None:
+      print(isInDatabase)
+      new_card = parseCard(card)
       arr.append(new_card)
-      b_pos += 1
   return arr
+  
 
 async def send_card(i, canal):
 	pt = ''
