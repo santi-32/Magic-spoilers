@@ -12,11 +12,11 @@ import pymongo
 from decouple import config
 from pymongo import MongoClient
 
-cluster = MongoClient("mongodb+srv://santi_32:santi_32@ms.gy385.mongodb.net/?retryWrites=true&w=majority")
+cluster = MongoClient(config('DISCORDTOKEN'))
 db = cluster["MS"]
 collection = db["Cards"]
 
-token = config('TOKEN')
+token = config('DISCORDTOKEN')
 discordClient = discord.Client()
 liveSets = ['ea1', 'ha6', 'dmu', 'dmc']
 
