@@ -12,7 +12,7 @@ import pymongo
 from decouple import config
 from pymongo import MongoClient
 
-cluster = MongoClient(config('DISCORDTOKEN'))
+cluster = MongoClient(config('MONGOACCESS'))
 db = cluster["MS"]
 collection = db["Cards"]
 
