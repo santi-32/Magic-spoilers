@@ -53,6 +53,9 @@ async def checkForChanges():
   unparsed = requests.get('https://api.scryfall.com/cards/search?order=set&q=%28' + sumString + '%29')
   print(unparsed)
   request = unparsed.json()
+  await parsePage(request)
+
+async def parsePage(request):
   if request['object'] == "list":
     newCards = await compareCards(request, collection)
     dicted_arr = []
@@ -62,8 +65,13 @@ async def checkForChanges():
           i.SecondFace = i.SecondFace.__dict__
         dicted_arr.append(i.__dict__)
       collection.insert_many(dicted_arr)
+    if "next_page" in request:
+      request = requests.get(request["next_page"]).json()
+      await parsePage(request)
   else:
     print("something went wrong")
+
+
 
 async def on_error(event, *args, **kwargs):
   logging.warning(traceback.format_exc())
@@ -147,7 +155,7 @@ async def send_card(i, canal):
 	pt = ''
 	if "Creature" in i.Types:
 		pt = ('\n' + i.Power + '/' + i.Toughness)
-	Embed = discord.Embed(title=i.Name, description=(i.Mana_cost + '\n' + i.Types + '\n' + i.Text + pt + '\n' + '\n' + i.Set))
+	Embed = discord.Embed(title=i.Name, description=(i.Mana_cost + '\n' + i.Types + '\n' + i.Text + pt + '\n' + '\n' + i.Set_name))
 	if i.Image != "No Image available":
 		Embed.set_image(url=i.Image)
 	await canal.send(embed=Embed)
