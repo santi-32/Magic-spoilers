@@ -18,7 +18,7 @@ collection = db["Cards"]
 
 token = config('DISCORDTOKEN')
 discordClient = discord.Client()
-liveSets = ['ea1', 'ha6', 'dmu', 'dmc']
+liveSets = ['dmu']
 
 class returnstruct():
     def __init__(self, Name, _id, Mana_cost, Types, Text, Power, Toughness, Image, Modal, SecondFace, Set, Set_name, Collector_number):
@@ -149,7 +149,6 @@ def getNewCards(collection, newFetch):
       new_card = parseCard(card)
       arr.append(new_card)
   return arr
-  
 
 async def send_card(i, canal):
 	pt = ''
