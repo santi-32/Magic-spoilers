@@ -18,7 +18,7 @@ collection = db["Cards"]
 
 token = config('DISCORDTOKEN')
 discordClient = discord.Client()
-liveSets = ['dmu']
+liveSets = ['40k']
 
 class returnstruct():
     def __init__(self, Name, _id, Mana_cost, Types, Text, Power, Toughness, Image, Modal, SecondFace, Set, Set_name, Collector_number):
