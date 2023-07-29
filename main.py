@@ -100,6 +100,20 @@ def parseCard(card):
     set = card['set']
     set_name = card['set_name']
     collector_number = card['collector_number']
+
+    name = card['name']
+    if 'type_line' in card:
+        types = card['type_line']
+    if 'power' in card:
+        power = card['power']
+        toughness = card['toughness']
+    if 'mana_cost' in card:
+        mana_cost = card['mana_cost']
+    if "oracle_text" in card:
+        oracle_text = card['oracle_text']
+    if 'image_uris' in card:
+        image = card['image_uris']['png']
+
     if 'card_faces' in card:
         secondface = returnstruct('', '', '', '', '', '', '', '', '', '', '', '', '')
         modal = True
@@ -128,19 +142,7 @@ def parseCard(card):
             secondface.Text = card[1]['oracle_text']
         if 'image_uris' in card[1]:
             secondface.Image = card[1]['image_uris']['png']
-    else:
-        name = card['name']
-        if 'type_line' in card:
-            types = card['type_line']
-        if 'power' in card:
-            power = card['power']
-            toughness = card['toughness']
-        if 'mana_cost' in card:
-            mana_cost = card['mana_cost']
-        if "oracle_text" in card:
-            oracle_text = card['oracle_text']
-        if 'image_uris' in card:
-            image = card['image_uris']['png']
+        
     return (returnstruct(name, _id, mana_cost, types, oracle_text, power, toughness, image, modal, secondface, set, set_name, collector_number))
 
 
