@@ -17,8 +17,8 @@ db = cluster["MS"]
 collection = db["Cards"]
 
 token = config('DISCORDTOKEN')
-discordClient = discord.Client()
-liveSets = ['40k']
+discordClient = discord.Client(intents=discord.Intents.default())
+liveSets = ['WOE', 'WOC', 'WOT']
 
 class returnstruct():
     def __init__(self, Name, _id, Mana_cost, Types, Text, Power, Toughness, Image, Modal, SecondFace, Set, Set_name, Collector_number):
@@ -61,7 +61,7 @@ async def parsePage(request):
     dicted_arr = []
     if len(newCards) > 0:
       for i in newCards:
-        if i.Modal:
+        if i.Modal == True:
           i.SecondFace = i.SecondFace.__dict__
         dicted_arr.append(i.__dict__)
       collection.insert_many(dicted_arr)
@@ -81,8 +81,9 @@ async def compareCards(request, collection):
   if (len(newCards) > 0):
     for g in discordClient.guilds:
       canal = discord.utils.get(g.channels, name="new-set-previews")
-      for i in newCards:
-        await send_card(i, canal)
+      if canal is not None:
+        for i in newCards:
+          await send_card(i, canal)
   return newCards
 
 def parseCard(card):
@@ -100,11 +101,12 @@ def parseCard(card):
     set_name = card['set_name']
     collector_number = card['collector_number']
     if 'card_faces' in card:
-        secondface = returnstruct(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        secondface = returnstruct('', '', '', '', '', '', '', '', '', '', '', '', '')
         modal = True
         card = card['card_faces']
         name = card[0]['name']
-        types = card[0]['type_line']
+        if 'type_line' in card[0]:
+            types = card[0]['type_line']
         if 'power' in card[0]:
             power = card[0]['power']
             toughness = card[0]['toughness']
@@ -115,7 +117,8 @@ def parseCard(card):
         if 'image_uris' in card[0]:
             image = card[0]['image_uris']['png']
         secondface.Name = card[1]['name']
-        secondface.Types = card[1]['type_line']
+        if 'type_line' in card[1]:
+            types = card[0]['type_line']
         if 'power' in card[1]:
             secondface.Power = card[1]['power']
             secondface.Toughness = card[1]['toughness']
@@ -127,7 +130,8 @@ def parseCard(card):
             secondface.Image = card[1]['image_uris']['png']
     else:
         name = card['name']
-        types = card['type_line']
+        if 'type_line' in card:
+            types = card['type_line']
         if 'power' in card:
             power = card['power']
             toughness = card['toughness']
@@ -145,21 +149,23 @@ def getNewCards(collection, newFetch):
   for card in newFetch['data']:
     isInDatabase = collection.find_one({"_id": card['id']}) 
     if isInDatabase == None:
-      print(isInDatabase)
       new_card = parseCard(card)
       arr.append(new_card)
+      print(len(arr))
   return arr
 
 async def send_card(i, canal):
 	pt = ''
 	if "Creature" in i.Types:
 		pt = ('\n' + i.Power + '/' + i.Toughness)
-	Embed = discord.Embed(title=i.Name, description=(i.Mana_cost + '\n' + i.Types + '\n' + i.Text + pt + '\n' + '\n' + i.Set_name))
+	Embed = discord.Embed(title=i.Name, description=(str(i.Mana_cost) + '\n' + str(i.Types) + '\n' + str(i.Text) + str(pt) + '\n' + '\n' + str(i.Set_name)))
 	if i.Image != "No Image available":
 		Embed.set_image(url=i.Image)
 	await canal.send(embed=Embed)
 	if i.Modal == True:
-		i.Modal = False
-		send_card(i.secondface)
+		await send_card(i.SecondFace, canal)
 
 discordClient.run(token)
+
+
+
