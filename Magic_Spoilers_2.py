@@ -56,9 +56,16 @@ async def buildCardArray(request):
 
 async def sendCards(channel, newCardsofSet):
     for c in newCardsofSet:
-        channel.send(embed = c.toMsg('front'))
-        if c.modal:
-            channel.send(embed = c.toMsg('back'))
+        await channel.send(embed = toMsg(c))
+
+def toMsg(card):
+    pt = ''
+    if (card.get("power") and card.get("toughness")):
+        pt = ('\n' + card.get("power") + '/' + card.get("toughness"))
+    Embed = discord.Embed(title=card["name"], description=(str(card["mana_cost"]) + '\n' + str(card["type_line"]) + '\n' + str(card["oracle_text"]) + str(pt) + '\n' + '\n' + str(card["set_name"])))
+    if card.get("image") != "No Image available":
+        Embed.set_image(url=card.get("image"))
+    return Embed
     
 @discordClient.event
 async def on_guild_join(guild):
@@ -94,6 +101,8 @@ async def sendNewCards(servers, newCards):
         if server.get("Sets"):
             for cardSet in server.get("Sets"):
                 await sendCards(channel, newCards[cardSet])
+
+
 
 @tasks.loop(minutes=5)
 async def checkForChanges():

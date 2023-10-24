@@ -5,14 +5,11 @@ class Card:
         self.front: dict
         self.back: dict
         Card.parseCard(self, unparsedCard)
-        self.set = unparsedCard['set']
-        self.set_name = unparsedCard['set_name']
-        self.collector_number = unparsedCard['collector_number'] 
     
     def parseFace(self, unparsedFace, unparsedCard):
         face = dict()
         face['name'] = unparsedFace.get("name")
-        face['types'] = unparsedFace.get("types")
+        face['type_line'] = unparsedFace.get("type_line")
         face['power'] = unparsedFace.get("power")
         face['toughness'] = unparsedFace.get("toughness")
         face['mana_cost'] = unparsedFace.get("mana_cost")
@@ -20,6 +17,10 @@ class Card:
         images = unparsedFace.get('image_uris')
         if images:
             face['image'] = images['png']
+        else:
+            images = unparsedCard.get('image_uris')
+            if images:
+                face['image'] = images['png']
         face['_id'] = unparsedCard['id']
         face['set_name'] = unparsedCard['set_name']
         face['collector_number'] = unparsedCard['collector_number'] 
@@ -44,7 +45,7 @@ class Card:
             pt = ''
             if (face.power != None and face.toughness != None):
                 pt = ('\n' + face.power + '/' + face.toughness)
-            Embed = discord.Embed(title=face.name, description=(str(face.mana_cost) + '\n' + str(face.types) + '\n' + str(face.text) + str(pt) + '\n' + '\n' + str(face.set_name)))
+            Embed = discord.Embed(title=face.name, description=(str(face.mana_cost) + '\n' + str(face.type_line) + '\n' + str(face.text) + str(pt) + '\n' + '\n' + str(face.set_name)))
         if face.image != "No Image available":
             Embed.set_image(url=face.image)
         return Embed
