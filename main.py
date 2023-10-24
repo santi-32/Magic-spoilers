@@ -12,6 +12,7 @@ import time
 @discordClient.event
 async def on_ready():
     print("bot is running")
+    await updateServerList()
     await tree.sync() #Update the discord command list in case of changes
     checkForChanges.start()
     
@@ -105,9 +106,15 @@ async def sendNewCards(servers, newCards):
                 await sendCards(channel, newCards[cardSet])
 
 
+async def updateServerList():
+    async for guild in discordClient.fetch_guilds():
+        server = guilds.find_one({"_id": guild.id})
+        if not server:
+            guilds.insert_one({'_id': guild.id, 'Name': guild.name, 'Sets': {}})
 
 @tasks.loop(minutes=5)
 async def checkForChanges():
+    
     start = time.time()
     servers = getServers()
     setsToBuild = getSetsToBuild(servers)

@@ -7,6 +7,6 @@ cluster = MongoClient(config('MONGOACCESS'))
 guilds = cluster["Discord"]["Servers"]
 discordClient = discord.Client(intents=discord.Intents.default())
 cardDB = cluster["Sets"]
-token = config('TESTTOKEN')
+token = config('DISCORDTOKEN')
 
 

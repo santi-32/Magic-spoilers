@@ -43,6 +43,20 @@ async def set_channel(interaction:discord.Interaction):
 
 @tree.command(name="help", description="Gives you instructions on how to use this bot")
 async def help(interaction:discord.Interaction):
-    await interaction.response.send_message("First, the bot needs a designated text channel to post the new card, you can \
-                                            set or modify this channel with the command set_channel. To manage the sets \
-                                            that the bot will keep track of, use the add_set or remove_set command")
+    await interaction.response.send_message("First, the bot needs a designated text channel to post the new card, you can set or modify this channel with the command set_channel. To manage the sets that the bot will keep track of, use the add_set or remove_set command")
+                                            
+@tree.command(name="show_sets", description="Shows the list of sets that this server is subscribed to")
+async def help(interaction:discord.Interaction):
+    guild = guilds.find_one({"_id": interaction.guild.id})
+    sets = guild.get('Sets')
+    if len(sets) > 0:
+        message = ""
+        for s in sets:
+            if message == "":
+                message += s
+            else:
+                message += ", " + s
+        await interaction.response.send_message("(" + message + ")")
+    else:
+        await interaction.response.send_message("this server is not subscribed to any set")
+                                            
