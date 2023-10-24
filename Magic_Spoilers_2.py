@@ -6,6 +6,8 @@ from decouple import config
 from pymongo import MongoClient
 from WebAccess import *
 from commands import tree
+import time
+
 
 @discordClient.event
 async def on_ready():
@@ -69,10 +71,10 @@ def toMsg(card):
     
 @discordClient.event
 async def on_guild_join(guild):
-    serverCol.insert_one({'Name': guild.name, 'Sets': {}})
+    guilds.insert_one({'_id': guild.id, 'Name': guild.name, 'Sets': {}})
 
 def getServers():
-    serversCursor = serverCol.find()
+    serversCursor = guilds.find()
     servers = list()
     for server in serversCursor:
         servers.append(server)
@@ -98,7 +100,7 @@ async def getNewCards(setsToBuild):
 async def sendNewCards(servers, newCards):
     for server in servers:
         channel = discordClient.get_channel(server.get("Spoiler_channel"))
-        if server.get("Sets"):
+        if server.get("Sets") and channel: #if the server has a list of sets and a dedicated channel defined
             for cardSet in server.get("Sets"):
                 await sendCards(channel, newCards[cardSet])
 
@@ -106,10 +108,13 @@ async def sendNewCards(servers, newCards):
 
 @tasks.loop(minutes=5)
 async def checkForChanges():
+    start = time.time()
     servers = getServers()
     setsToBuild = getSetsToBuild(servers)
     newCards = await getNewCards(setsToBuild)
     await sendNewCards(servers, newCards)
+    end = time.time()
+    print("update cycle realized succesfully in " + str(end - start) + " seconds")
 
 
 discordClient.run(token)

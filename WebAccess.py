@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from decouple import config
 
 cluster = MongoClient(config('MONGOACCESS'))
-serverCol = cluster["Discord"]["Servers"]
+guilds = cluster["Discord"]["Servers"]
 discordClient = discord.Client(intents=discord.Intents.default())
 cardDB = cluster["Sets"]
 token = config('TESTTOKEN')
