@@ -1,171 +1,121 @@
-from ctypes import sizeof
-import os
-import sys
 import discord
 import requests
-import json
-import time
-import asyncio
+from Card import Card
 from discord.ext import tasks
-import logging, traceback
-import pymongo
 from decouple import config
 from pymongo import MongoClient
-
-cluster = MongoClient(config('MONGOACCESS'))
-db = cluster["MS"]
-collection = db["Cards"]
-
-token = config('DISCORDTOKEN')
-discordClient = discord.Client(intents=discord.Intents.default())
-liveSets = ['WOE', 'WOC', 'WOT']
-
-class returnstruct():
-    def __init__(self, Name, _id, Mana_cost, Types, Text, Power, Toughness, Image, Modal, SecondFace, Set, Set_name, Collector_number):
-        self.Name = Name
-        self._id = _id
-        self.Mana_cost = Mana_cost
-        self.Types = Types
-        self.Text = Text
-        self.Power = Power
-        self.Toughness = Toughness
-        self.Image = Image
-        self.Modal = Modal
-        self.SecondFace = SecondFace
-        self.Set = Set
-        self.Set_name = Set_name
-        self.Collector_number = Collector_number
+from WebAccess import *
+from commands import tree
+import time
 
 
 @discordClient.event
 async def on_ready():
     print("bot is running")
+    await tree.sync() #Update the discord command list in case of changes
     checkForChanges.start()
+    
+
+async def insertNewCards(request, cardSet):
+    cardsInSet = await buildCardArray(request)
+    cardsInDBCursor = cardDB[cardSet].find()
+    cardsInDB = list()
+    for card in cardsInDBCursor:
+        cardsInDB.append(card)
+    newCards = getUnstoredCards(cardsInDB, cardsInSet)
+    if len(newCards) > 0:
+        print(newCards)
+        cardDB[cardSet].insert_many(newCards)
+    return newCards
+
+def getUnstoredCards(cardsInDB, cardsInSet):
+    cardsInDB.sort(key=lambda card: card.get("_id"))
+    cardsInSet.sort(key=lambda card: card.get("_id"))
+    return compareLists(cardsInDB, cardsInSet)
+
+def compareLists(cardsInDB, cardsInSet):
+    newCards = []
+    i = 0
+    for card in cardsInDB:
+        if len(cardsInSet) <= i:
+            return newCards
+        while len(cardsInSet) > i and card.get("_id") != cardsInSet[i].get("_id"):
+            print(card.get("name") + " / " + cardsInSet[i].get("name"))
+            newCards.append(cardsInSet.pop(i))
+        i += 1
+    return newCards
+
+async def buildCardArray(request):
+    cardList = list()
+    if request['object'] == "list":
+        for c in request['data']:
+           cardInstance = Card(c)
+           cardList.extend(cardInstance.toDict())
+    if "next_page" in request:
+        request = requests.get(request["next_page"]).json()
+        cardList.extend(await buildCardArray(request))
+    return cardList
+
+async def sendCards(channel, newCardsofSet):
+    for c in newCardsofSet:
+        await channel.send(embed = toMsg(c))
+
+def toMsg(card):
+    pt = ''
+    if (card.get("power") and card.get("toughness")):
+        pt = ('\n' + card.get("power") + '/' + card.get("toughness"))
+    Embed = discord.Embed(title=card["name"], description=(str(card["mana_cost"]) + '\n' + str(card["type_line"]) + '\n' + str(card["oracle_text"]) + str(pt) + '\n' + '\n' + str(card["set_name"])))
+    if card.get("image") != "No Image available":
+        Embed.set_image(url=card.get("image"))
+    return Embed
+    
+@discordClient.event
+async def on_guild_join(guild):
+    guilds.insert_one({'_id': guild.id, 'Name': guild.name, 'Sets': {}})
+
+def getServers():
+    serversCursor = guilds.find()
+    servers = list()
+    for server in serversCursor:
+        servers.append(server)
+    return servers
+
+def getSetsToBuild(servers):
+    setsToBuild = set()
+    for server in servers:
+        if server.get("Sets"):
+            for cardSet in server.get("Sets"):
+                setsToBuild.add(cardSet)
+    return setsToBuild
+
+async def getNewCards(setsToBuild):
+    newCards = dict()
+    for cardSet in setsToBuild:
+        unparsed = requests.get('https://api.scryfall.com/cards/search?order=set&q=%28' +
+                                'set%3A' + cardSet + '%29')
+        request = unparsed.json()
+        newCards[cardSet] = await insertNewCards(request, cardSet)
+    return newCards
+
+async def sendNewCards(servers, newCards):
+    for server in servers:
+        channel = discordClient.get_channel(server.get("Spoiler_channel"))
+        if server.get("Sets") and channel: #if the server has a list of sets and a dedicated channel defined
+            for cardSet in server.get("Sets"):
+                await sendCards(channel, newCards[cardSet])
+
+
 
 @tasks.loop(minutes=5)
 async def checkForChanges():
-  sumString = ''
-  for set in liveSets:
-    if sumString == '':
-      sumString += 'set%3A' + set
-    else:
-      sumString += '+OR+' + 'set%3A' + set
-  unparsed = requests.get('https://api.scryfall.com/cards/search?order=set&q=%28' + sumString + '%29')
-  print(unparsed)
-  request = unparsed.json()
-  await parsePage(request)
+    start = time.time()
+    servers = getServers()
+    setsToBuild = getSetsToBuild(servers)
+    newCards = await getNewCards(setsToBuild)
+    await sendNewCards(servers, newCards)
+    end = time.time()
+    print("update cycle realized succesfully in " + str(end - start) + " seconds")
 
-async def parsePage(request):
-  if request['object'] == "list":
-    newCards = await compareCards(request, collection)
-    dicted_arr = []
-    if len(newCards) > 0:
-      for i in newCards:
-        if i.Modal == True:
-          i.SecondFace = i.SecondFace.__dict__
-        dicted_arr.append(i.__dict__)
-      collection.insert_many(dicted_arr)
-    if "next_page" in request:
-      request = requests.get(request["next_page"]).json()
-      await parsePage(request)
-  else:
-    print("something went wrong")
-
-
-
-async def on_error(event, *args, **kwargs):
-  logging.warning(traceback.format_exc())
-
-async def compareCards(request, collection):
-  newCards = getNewCards(collection, request)
-  if (len(newCards) > 0):
-    for g in discordClient.guilds:
-      canal = discord.utils.get(g.channels, name="new-set-previews")
-      if canal is not None:
-        for i in newCards:
-          await send_card(i, canal)
-  return newCards
-
-def parseCard(card):
-    name = ''
-    types = ''
-    power = '0'
-    toughness = '0'
-    mana_cost = '0'
-    oracle_text = 'Vanilla'
-    image = 'No Image available'
-    modal = False
-    secondface = None
-    _id = card['id']
-    set = card['set']
-    set_name = card['set_name']
-    collector_number = card['collector_number']
-    if 'card_faces' in card:
-        secondface = returnstruct('', '', '', '', '', '', '', '', '', '', '', '', '')
-        modal = True
-        card = card['card_faces']
-        name = card[0]['name']
-        if 'type_line' in card[0]:
-            types = card[0]['type_line']
-        if 'power' in card[0]:
-            power = card[0]['power']
-            toughness = card[0]['toughness']
-        if 'mana_cost' in card[0]:
-            mana_cost = card[0]['mana_cost']
-        if "oracle_text" in card[0]:
-            oracle_text = card[0]['oracle_text']
-        if 'image_uris' in card[0]:
-            image = card[0]['image_uris']['png']
-        secondface.Name = card[1]['name']
-        if 'type_line' in card[1]:
-            types = card[0]['type_line']
-        if 'power' in card[1]:
-            secondface.Power = card[1]['power']
-            secondface.Toughness = card[1]['toughness']
-        if 'mana_cost' in card[1]:
-            secondface.Mana_cost = card[1]['mana_cost']
-        if "oracle_text" in card[1]:
-            secondface.Text = card[1]['oracle_text']
-        if 'image_uris' in card[1]:
-            secondface.Image = card[1]['image_uris']['png']
-    else:
-        name = card['name']
-        if 'type_line' in card:
-            types = card['type_line']
-        if 'power' in card:
-            power = card['power']
-            toughness = card['toughness']
-        if 'mana_cost' in card:
-            mana_cost = card['mana_cost']
-        if "oracle_text" in card:
-            oracle_text = card['oracle_text']
-        if 'image_uris' in card:
-            image = card['image_uris']['png']
-    return (returnstruct(name, _id, mana_cost, types, oracle_text, power, toughness, image, modal, secondface, set, set_name, collector_number))
-
-
-def getNewCards(collection, newFetch):
-  arr = []
-  for card in newFetch['data']:
-    isInDatabase = collection.find_one({"_id": card['id']}) 
-    if isInDatabase == None:
-      new_card = parseCard(card)
-      arr.append(new_card)
-      print(len(arr))
-  return arr
-
-async def send_card(i, canal):
-	pt = ''
-	if "Creature" in i.Types:
-		pt = ('\n' + i.Power + '/' + i.Toughness)
-	Embed = discord.Embed(title=i.Name, description=(str(i.Mana_cost) + '\n' + str(i.Types) + '\n' + str(i.Text) + str(pt) + '\n' + '\n' + str(i.Set_name)))
-	if i.Image != "No Image available":
-		Embed.set_image(url=i.Image)
-	await canal.send(embed=Embed)
-	if i.Modal == True:
-		await send_card(i.SecondFace, canal)
 
 discordClient.run(token)
-
-
-
+        
