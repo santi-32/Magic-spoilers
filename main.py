@@ -6,6 +6,7 @@ import requests
 import json
 import time
 import asyncio
+import Card
 from discord.ext import tasks
 import logging, traceback
 import pymongo
