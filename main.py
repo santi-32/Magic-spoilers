@@ -25,7 +25,6 @@ async def insertNewCards(request, cardSet):
         cardsInDB.append(card)
     newCards = getUnstoredCards(cardsInDB, cardsInSet)
     if len(newCards) > 0:
-        print(newCards)
         cardDB[cardSet].insert_many(newCards)
     return newCards
 
@@ -40,10 +39,15 @@ def compareLists(cardsInDB, cardsInSet):
     for card in cardsInDB:
         if len(cardsInSet) <= i:
             return newCards
+        temp = []
         while len(cardsInSet) > i and card.get("_id") != cardsInSet[i].get("_id"):
             print(card.get("name") + " / " + cardsInSet[i].get("name"))
-            newCards.append(cardsInSet.pop(i))
-        i += 1
+            temp.append(cardsInSet.pop(i))
+        if len(cardsInSet) == i: #this ocurrs if 'card' is in cardsInDB, but not in cardsInSet, this ocurrs due to mistakes from scryfall's database and must be handleded as an exception
+            cardsInSet.extend(temp)
+        else:
+            newCards.extend(temp)
+            i += 1        
     return newCards
 
 async def buildCardArray(request):
