@@ -1,12 +1,9 @@
 import discord
-import requests
-from Card import Card
 from discord.ext import tasks
-from decouple import config
-from pymongo import MongoClient
 from WebAccess import *
 from commands import tree
 import time
+from card_array_builder import getCardsInSet
 
 
 @discordClient.event
@@ -17,8 +14,7 @@ async def on_ready():
     checkForChanges.start()
     
 
-async def insertNewCards(request, cardSet):
-    cardsInSet = await buildCardArray(request)
+async def insertNewCards(cardsInSet, cardSet):
     cardsInDBCursor = cardDB[cardSet].find()
     cardsInDB = list()
     for card in cardsInDBCursor:
@@ -33,7 +29,7 @@ def getUnstoredCards(cardsInDB, cardsInSet):
     cardsInSet.sort(key=lambda card: card.get("_id"))
     return compareLists(cardsInDB, cardsInSet)
 
-def compareLists(cardsInDB, cardsInSet):
+def compareLists(cardsInDB, cardsInSet: list):
     newCards = []
     i = 0
     for card in cardsInDB:
@@ -41,25 +37,17 @@ def compareLists(cardsInDB, cardsInSet):
             return newCards
         temp = []
         while len(cardsInSet) > i and card.get("_id") != cardsInSet[i].get("_id"):
-            print(card.get("name") + " / " + cardsInSet[i].get("name"))
-            temp.append(cardsInSet.pop(i))
+            print(card.get('name') + " / " + cardsInSet[i].get('name')) #in case of testing
+            discrepancy = cardsInSet.pop(i)
+            temp.append(discrepancy)
         if len(cardsInSet) == i: #this ocurrs if 'card' is in cardsInDB, but not in cardsInSet, this ocurrs due to mistakes from scryfall's database and must be handleded as an exception
             cardsInSet.extend(temp)
         else:
             newCards.extend(temp)
-            i += 1        
+            i += 1
+    for j in range(i, len(cardsInSet)):
+        newCards.append(cardsInSet[j])
     return newCards
-
-async def buildCardArray(request):
-    cardList = list()
-    if request['object'] == "list":
-        for c in request['data']:
-           cardInstance = Card(c)
-           cardList.extend(cardInstance.toDict())
-    if "next_page" in request:
-        request = requests.get(request["next_page"]).json()
-        cardList.extend(await buildCardArray(request))
-    return cardList
 
 async def sendCards(channel, newCardsofSet):
     for c in newCardsofSet:
@@ -93,13 +81,11 @@ def getSetsToBuild(servers):
                 setsToBuild.add(cardSet)
     return setsToBuild
 
-async def getNewCards(setsToBuild):
+async def getSpoiledCards(setsToBuild):
     newCards = dict()
     for cardSet in setsToBuild:
-        unparsed = requests.get('https://api.scryfall.com/cards/search?order=set&q=%28' +
-                                'set%3A' + cardSet + '%29')
-        request = unparsed.json()
-        newCards[cardSet] = await insertNewCards(request, cardSet)
+        cardsInSet = await getCardsInSet(cardSet)
+        newCards[cardSet] = await insertNewCards(cardsInSet, cardSet)
     return newCards
 
 async def sendNewCards(servers, newCards):
@@ -122,7 +108,7 @@ async def checkForChanges():
     start = time.time()
     servers = getServers()
     setsToBuild = getSetsToBuild(servers)
-    newCards = await getNewCards(setsToBuild)
+    newCards = await getSpoiledCards(setsToBuild)
     await sendNewCards(servers, newCards)
     end = time.time()
     print("update cycle realized succesfully in " + str(end - start) + " seconds")

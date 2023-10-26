@@ -1,34 +1,34 @@
 from discord import app_commands
 import discord
-from pymongo import MongoClient
-from decouple import config
 from WebAccess import *
 import requests
-from Card import Card
+from card_array_builder import getCardsInSet
+
 
 tree = app_commands.CommandTree(discordClient)
 
 @tree.command(name="add_set", description="adds a Magic set to the list of listened sets (max 3)")
 async def add_set(interaction:discord.Interaction, card_set: str):
+    card_set = card_set.upper()
     request = requests.get('https://api.scryfall.com/sets/' + card_set)
     if (request.status_code == 200):
-        print("a")
         setInfo = request.json()
         if setInfo['object'] == 'set':
-            print("b")
             if not card_set in cardDB.list_collection_names():
                 await interaction.response.send_message("Building card database, this might take a bit...")
-                newCards = await getNewCards(card_set)
+                newCards = await getCardsInSet(card_set)
                 cardDB[card_set].insert_many(newCards)
             else:
                 await interaction.response.send_message("Adding set to the list...")
             guild = guilds.find_one({"_id": interaction.guild.id})
             if guild.get('Sets'):
-                print("c")
-                if len(guild['Sets']) < 3:
-                    print("d")
-                    guilds.update_one({'_id': guild['_id']}, {"$set": {'Sets': (guild['Sets'].append(card_set))}})
-                    await interaction.edit_original_response(content=setInfo['name'] + ' added to the list')
+                if card_set in guild['Sets']:
+                    await interaction.edit_original_response(content="This set is alredy on the list")
+                elif len(guild['Sets']) < 3:
+                    temp = guild['Sets'] #for some reason, 
+                    temp.append(card_set)
+                    guilds.update_one({'_id': guild['_id']}, {"$set": {'Sets': (temp)}})
+                    await interaction.edit_original_response(content=(setInfo['name'] + ' added to the list'))
                 else:
                     await interaction.edit_original_response(content='guild exceeds the maximum amount of listened sets, remove one before adding another')
             else:
@@ -41,6 +41,7 @@ async def add_set(interaction:discord.Interaction, card_set: str):
     
 @tree.command(name="remove_set", description="removes a Magic set from the list of listened sets")
 async def remove_set(interaction:discord.Interaction, card_set: str):
+    card_set = card_set.upper()
     guild = guilds.find_one({'_id': interaction.guild.id})
     if card_set in guild['Sets']:
         guilds.update_one({'_id': guild['_id']}, {"$set": {'Sets': (guild['Sets'].remove(card_set))}})
@@ -62,7 +63,10 @@ async def help(interaction:discord.Interaction):
 async def help(interaction:discord.Interaction):
     guild = guilds.find_one({"_id": interaction.guild.id})
     sets = guild.get('Sets')
-    if len(sets) > 0:
+    if not sets:
+        print("is none")
+        await interaction.response.send_message("this server is not subscribed to any set")
+    elif len(sets) > 0:
         message = ""
         for s in sets:
             if message == "":
@@ -73,22 +77,3 @@ async def help(interaction:discord.Interaction):
     else:
         await interaction.response.send_message("this server is not subscribed to any set")
                                             
-async def buildCardArray(request):
-    cardList = list()
-    if request['object'] == "list":
-        for c in request['data']:
-           cardInstance = Card(c)
-           cardList.extend(cardInstance.toDict())
-    if "next_page" in request:
-        request = requests.get(request["next_page"]).json()
-        cardList.extend(await buildCardArray(request))
-    return cardList
-
-async def getNewCards(card_set):
-    newCards = dict()
-    unparsed = requests.get('https://api.scryfall.com/cards/search?order=set&q=%28' +
-                                'set%3A' + card_set + '%29')
-    request = unparsed.json()
-    print(request)
-    newCards = await buildCardArray(request)
-    return newCards

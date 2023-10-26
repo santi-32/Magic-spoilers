@@ -1,4 +1,3 @@
-from discord import app_commands
 import discord
 from pymongo import MongoClient
 from decouple import config
