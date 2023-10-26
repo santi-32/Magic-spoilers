@@ -6,7 +6,6 @@ chardet==4.0.0
 charset-normalizer==2.1.0
 discord.py==1.7.3
 dnspython==2.2.1
-heroku==0.1.4
 idna==3.3
 multidict==6.0.2
 pymongo==4.2.0
